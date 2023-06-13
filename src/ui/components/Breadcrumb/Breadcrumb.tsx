@@ -9,6 +9,7 @@ type BreadcrumbComponentProps = {
 };
 
 const BreadcrumbComponent = ({ title, path }: BreadcrumbComponentProps) => {
+    console.log('path ::', window.location.pathname);
   return <BreadcrumContainer>
     <div className="title">
         <FontAwesomeIcon icon={faCodeFork}/>

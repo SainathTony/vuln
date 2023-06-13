@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import BreadcrumbComponent from "../../components/Breadcrumb/Breadcrumb";
+import React, { useState } from "react";
 import { getVulnerabilities } from "../Vulnerability/Vulnerability.api";
 import { Vulnerability } from "../Vulnerability/Vulnerablility.type";
-import VulnerabilityComponent from "../Vulnerability/Vulnerability";
 import {
   Paper,
   Table,
@@ -15,14 +13,12 @@ import {
 import { VulnerabilityContainer } from "./styles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSort } from "@fortawesome/free-solid-svg-icons";
+import ApplicationListComponent from "./ApplicationList";
 
 const ApplicationsComponent = () => {
-  const title = "Applications";
-  const path = ["Apps", "azpython", "Scans"];
   const [vulnerabilities, setVulnerabilities] = useState<
     Vulnerability[] | null
   >();
-  const [filePath, setFilePath] = useState(path);
   if (!vulnerabilities) {
     getVulnerabilities().then((response) => {
       console.log("res::", response);
@@ -34,7 +30,7 @@ const ApplicationsComponent = () => {
     const vMap: Map<string, Vulnerability[]> = new Map();
     vuls.forEach((vul) => {
       if (vMap.get(vul.vuln_name)) {
-        vMap.set(vul.vuln_name, [...vMap.get(vul.vuln_name) ?? [], vul]);
+        vMap.set(vul.vuln_name, [...(vMap.get(vul.vuln_name) ?? []), vul]);
       } else {
         vMap.set(vul.vuln_name, [vul]);
       }
@@ -47,31 +43,47 @@ const ApplicationsComponent = () => {
   };
   return (
     <>
-      <BreadcrumbComponent title={title} path={filePath} />
       {vulnerabilities ? (
         <VulnerabilityContainer>
-        <Paper className="table-container">
-          <TableContainer sx={{ maxHeight: 550 }}>
-            <Table stickyHeader aria-label="sticky table" className="vul-table">
-              <TableHead className="table-head">
-                <TableRow style={{backgroundColor: 'var(--background-color)'}}>
-                  <TableCell align="left" colSpan={2}>
-                    Application Name <FontAwesomeIcon icon={faSort}/>
-                  </TableCell>
-                  <TableCell align="left">Progess <FontAwesomeIcon icon={faSort}/></TableCell>
-                  <TableCell align="left">Vulnerabilities <FontAwesomeIcon icon={faSort}/></TableCell>
-                  <TableCell align="left">Tested <FontAwesomeIcon icon={faSort}/></TableCell>
-                  <TableCell align="right">Action <FontAwesomeIcon icon={faSort}/></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody className="table-body">
-                {groupVulnerabilities(vulnerabilities).map((vul) => (
-                  <VulnerabilityComponent vulGroup={vul} key={vul[0].vuln_name} setFilePath={setFilePath}/>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Paper>
+          <Paper className="table-container">
+            <TableContainer sx={{ maxHeight: 550 }}>
+              <Table
+                stickyHeader
+                aria-label="sticky table"
+                className="vul-table"
+              >
+                <TableHead className="table-head">
+                  <TableRow
+                    style={{ backgroundColor: "var(--background-color)" }}
+                  >
+                    <TableCell align="left" colSpan={2}>
+                      Application Name <FontAwesomeIcon icon={faSort} />
+                    </TableCell>
+                    <TableCell align="left">
+                      Progess <FontAwesomeIcon icon={faSort} />
+                    </TableCell>
+                    <TableCell align="left">
+                      Vulnerabilities <FontAwesomeIcon icon={faSort} />
+                    </TableCell>
+                    <TableCell align="left">
+                      Tested <FontAwesomeIcon icon={faSort} />
+                    </TableCell>
+                    <TableCell align="right">
+                      Action <FontAwesomeIcon icon={faSort} />
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody className="table-body">
+                  {groupVulnerabilities(vulnerabilities).map((vul) => (
+                    <ApplicationListComponent
+                      vulGroup={vul}
+                      key={vul[0].vuln_name}
+                    />
+                  ))}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Paper>
         </VulnerabilityContainer>
       ) : (
         <h1>Loading...</h1>

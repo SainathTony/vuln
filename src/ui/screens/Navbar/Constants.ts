@@ -9,8 +9,8 @@ type NavItem = {
 }
 
 export const NAV_ITEMS: NavItem[] = [
-    {title: 'Dashboard', link: 'dashboard', icon: faTableColumns, isActive: false},
-    {title: 'Applications', link: '', icon: faCodeFork, isActive: true},
-    {title: 'Reports', link: 'reports', icon: faChartPie, isActive: false},
-    {title: 'Integrations', link: 'integrations', icon: faPuzzlePiece, isActive: false}
+    {title: 'Dashboard', link: '/dashboard', icon: faTableColumns, isActive: false},
+    {title: 'Applications', link: '/applications', icon: faCodeFork, isActive: true},
+    {title: 'Reports', link: '/reports', icon: faChartPie, isActive: false},
+    {title: 'Integrations', link: '/integrations', icon: faPuzzlePiece, isActive: false}
 ]

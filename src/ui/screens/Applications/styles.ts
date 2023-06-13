@@ -65,3 +65,10 @@ export const VulnerabilityContainer = styled.div`
    }
     }
 `
+export const ProgressContainer = styled.div`
+
+`
+
+export const TableCellContainer = styled.td`
+
+`

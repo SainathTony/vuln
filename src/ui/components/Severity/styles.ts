@@ -3,7 +3,7 @@ import { styled } from "styled-components";
 export const SeverityContainer = styled.div`
     display: flex;
     color: var(--white-color);
-    & .container {
+    & .sev-container {
         display: flex;
         margin-right: 10px;
         &.LOW {

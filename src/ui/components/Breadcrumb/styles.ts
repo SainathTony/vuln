@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const BreadcrumContainer = styled.div`
     padding: 2rem;
+    padding-bottom: 0;
     & .title {
         > svg {
             font-size: 20px;
